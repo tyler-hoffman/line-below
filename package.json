@@ -1,0 +1,9 @@
+{
+  "name": "line-below",
+  "version": "1.0.0",
+  "description": "Purely functional typescript utils",
+  "main": "index.js",
+  "author": "Tyler Hoffman <tyler.c.hoffman@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
