@@ -10,9 +10,9 @@ describe('cond', () => {
       [x => x == 5, () => '5'],
       [x => x == 4, () => '4'],
       [x => x == 5, () => 9],
-    ], 4);
+    ]);
 
-    expect(output).toEqual('444');
+    expect(output(4)).toEqual('444');
   });
 
   it('returns undefined if there are no matches', () => {
@@ -24,8 +24,8 @@ describe('cond', () => {
       [x => x == 5, () => '5'],
       [x => x == 4, () => '4'],
       [x => x == 5, () => 9],
-    ], 6);
+    ]);
 
-    expect(output).toEqual(undefined);
+    expect(output(6)).toEqual(undefined);
   });
 });
