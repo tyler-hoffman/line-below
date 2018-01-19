@@ -1,20 +1,19 @@
-import { Predicate, Lazy } from './types';
+import { Lazy } from './types';
 import { head, tail } from './array';
 import ifElse from './if-else';
 
-export type CondOption<T, U> = [Predicate<T>, Lazy<U>];
-export const condOption = <T, U>(p: Predicate<T>, l: Lazy<U>): CondOption<T, U> =>
-  [p, l];
-export const predicate = <T>(option: CondOption<T, any>) =>
-  option[0];
-export const evaluation = <T>(option: CondOption<any, T>) =>
-  option[1];
+export type MatchOption<T> = [boolean, Lazy<T>];
 
-const cond = <T, U>(options: CondOption<T, U>[]) => (t: T): U | undefined =>
+export const matchOption = <T>(condition: boolean, out: Lazy<T>): MatchOption<T> =>
+  [condition, out];
+export const condition = (option: MatchOption<any>) => option[0];
+export const evaluation = <T>(option: MatchOption<T>) => option[1]();
+
+const match = <T>(options: MatchOption<T>[]): T | undefined =>
   ifElse(!options.length,
     () => undefined,
-    () => ifElse(predicate(head(options))(t),
-      () => evaluation(head(options))(),
-      () => cond(tail(options))(t)));
+    () => ifElse(condition(head(options)),
+      () => evaluation(head(options)),
+      () => match(tail(options))));
 
-export default cond;
+export default match;

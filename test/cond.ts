@@ -1,31 +1,24 @@
 import cond from '../src/cond';
 
-describe('cond', () => {
+describe('match', () => {
   it('selects the first match', () => {
-    const output = cond([
-      [x => x == 1, () => '1'],
-      [x => x == 2, () => '2'],
-      [x => x == 3, () => '3'],
-      [x => x == 4, () => '444'],
-      [x => x == 5, () => '5'],
-      [x => x == 4, () => '4'],
-      [x => x == 5, () => 9],
-    ]);
+    const x: number = 4;
 
-    expect(output(4)).toEqual('444');
+    expect(cond([
+      [x === 3, () => 'nope'],
+      [x < 2, () => 'nope'],
+      [x > 1, () => 'yup'],
+      [x === 4, () => 'nope']
+    ])).toEqual('yup');
   });
 
-  it('returns undefined if there are no matches', () => {
-    const output = cond([
-      [x => x == 1, () => '1'],
-      [x => x == 2, () => '2'],
-      [x => x == 3, () => '3'],
-      [x => x == 4, () => '444'],
-      [x => x == 5, () => '5'],
-      [x => x == 4, () => '4'],
-      [x => x == 5, () => 9],
-    ]);
+  it('results in undefined if no matches', () => {
+    const x: number = 4;
 
-    expect(output(6)).toEqual(undefined);
+    expect(cond([
+      [x === 3, () => 'nope'],
+      [x === 2, () => 'nope'],
+      [x === 1, () => 'nope']
+    ])).toEqual(undefined);
   });
 });
